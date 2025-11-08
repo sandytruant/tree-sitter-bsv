@@ -313,7 +313,7 @@ module.exports = grammar({
     ),
 
     parameterized_type: $ => seq(
-      $.identifier,
+      choice($.identifier, $.primitive_type),
       '#',
       '(',
       choice($.type, $.number, $.expression),
