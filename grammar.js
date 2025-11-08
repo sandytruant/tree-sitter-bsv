@@ -140,51 +140,22 @@ module.exports = grammar({
     ),
 
     // Methods
-    method_declaration: $ => choice(
-      // Method with body and return type
-      seq(
-        'method',
-        field('return_type', $.type),
-        field('name', $.identifier),
-        optional($.parameter_list),
-        ';',
+    method_declaration: $ => seq(
+      'method',
+      field('return_type', $.type),
+      field('name', $.identifier),
+      optional($.parameter_list),
+      optional(seq('if', '(', $.expression, ')')), // optional guard
+      ';',
+      optional(seq(
         repeat(choice(
           $.statement,
           $.comment,
         )),
         'endmethod',
-        optional(seq(':', $.identifier)),
-        ';'
-      ),
-      // Method with body, no return type
-      seq(
-        'method',
-        field('name', $.identifier),
-        optional($.parameter_list),
-        ';',
-        repeat(choice(
-          $.statement,
-          $.comment,
-        )),
-        'endmethod',
-        optional(seq(':', $.identifier)),
-        ';'
-      ),
-      // Method without body (interface declaration) with return type
-      seq(
-        'method',
-        field('return_type', $.type),
-        field('name', $.identifier),
-        optional($.parameter_list),
-        ';'
-      ),
-      // Method without body (interface declaration) no return type
-      seq(
-        'method',
-        field('name', $.identifier),
-        optional($.parameter_list),
-        ';'
-      )
+        optional(seq(':', $.identifier))
+      )),
+      optional(';')
     ),
 
     // Variables
