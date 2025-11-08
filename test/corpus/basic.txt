@@ -1,0 +1,153 @@
+==================
+Simple package
+==================
+
+package Example;
+endpackage
+
+---
+
+(source_file
+  (package_declaration
+    name: (identifier)))
+
+==================
+Package with import
+==================
+
+package Example;
+import FIFO::*;
+endpackage
+
+---
+
+(source_file
+  (package_declaration
+    name: (identifier)
+    (import_declaration
+      (identifier))))
+
+==================
+Simple module
+==================
+
+module mkCounter (Counter);
+  Reg#(Int#(32)) count <- mkReg(0);
+endmodule
+
+---
+
+(source_file
+  (module_declaration
+    name: (identifier)
+    (module_body
+      (identifier)
+      (variable_declaration
+        (parameterized_type
+          (identifier)
+          (parameterized_type
+            (identifier)
+            (number)))
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (number)))))))
+
+==================
+Interface declaration
+==================
+
+interface Counter;
+  method Action increment;
+  method Int#(32) read;
+endinterface
+
+---
+
+(source_file
+  (interface_declaration
+    name: (identifier)
+    (method_declaration
+      (identifier)
+      (identifier))
+    (method_declaration
+      (parameterized_type
+        (identifier)
+        (number))
+      (identifier))))
+
+==================
+Function declaration
+==================
+
+function Int#(32) add(Int#(32) a, Int#(32) b);
+  return a + b;
+endfunction
+
+---
+
+(source_file
+  (function_declaration
+    (parameterized_type
+      (identifier)
+      (number))
+    name: (identifier)
+    (parameter_list
+      (parameter
+        (parameterized_type
+          (identifier)
+          (number))
+        (identifier))
+      (parameter
+        (parameterized_type
+          (identifier)
+          (number))
+        (identifier)))
+    (return_statement
+      (binary_expression
+        (identifier)
+        (identifier)))))
+
+==================
+Typedef struct
+==================
+
+typedef struct {
+  Int#(32) x;
+  Bool valid;
+} MyStruct;
+
+---
+
+(source_file
+  (typedef_declaration
+    (struct_member
+      (parameterized_type
+        (identifier)
+        (number))
+      (identifier))
+    (struct_member
+      (primitive_type)
+      (identifier))
+    (identifier)))
+
+==================
+Comments
+==================
+
+// Single line comment
+package Test;
+(* Multi-line
+   comment *)
+/* C-style comment */
+endpackage
+
+---
+
+(source_file
+  (comment)
+  (package_declaration
+    name: (identifier)
+    (comment)
+    (comment)))
