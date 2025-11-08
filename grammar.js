@@ -1,6 +1,8 @@
 module.exports = grammar({
   name: 'bsv',
 
+  word: $ => $.identifier,
+
   extras: $ => [
     /\s/,
     $.comment,
@@ -10,6 +12,7 @@ module.exports = grammar({
     [$.method_declaration],
     [$.assignment_statement, $.expression],
     [$.assignment_statement, $.bit_select],
+    [$.type],
   ],
 
   rules: {
@@ -138,10 +141,10 @@ module.exports = grammar({
 
     // Methods
     method_declaration: $ => choice(
-      // Method with body
+      // Method with body and return type
       seq(
         'method',
-        optional($.type),
+        field('return_type', $.type),
         field('name', $.identifier),
         optional($.parameter_list),
         ';',
@@ -153,10 +156,31 @@ module.exports = grammar({
         optional(seq(':', $.identifier)),
         ';'
       ),
-      // Method without body (interface declaration)
+      // Method with body, no return type
       seq(
         'method',
-        optional($.type),
+        field('name', $.identifier),
+        optional($.parameter_list),
+        ';',
+        repeat(choice(
+          $.statement,
+          $.comment,
+        )),
+        'endmethod',
+        optional(seq(':', $.identifier)),
+        ';'
+      ),
+      // Method without body (interface declaration) with return type
+      seq(
+        'method',
+        field('return_type', $.type),
+        field('name', $.identifier),
+        optional($.parameter_list),
+        ';'
+      ),
+      // Method without body (interface declaration) no return type
+      seq(
+        'method',
         field('name', $.identifier),
         optional($.parameter_list),
         ';'
@@ -288,11 +312,18 @@ module.exports = grammar({
     ),
 
     // Types
-    type: $ => choice(
-      $.vector_type,
-      $.parameterized_type,
-      $.primitive_type,
-      $.identifier,
+    type: $ => seq(
+      choice(
+        $.primitive_type,
+        $.identifier,
+      ),
+      optional(seq(
+        '#',
+        '(',
+        choice($.number, $.type),
+        repeat(seq(',', choice($.number, $.type))),
+        ')'
+      ))
     ),
 
     primitive_type: $ => choice(
@@ -306,29 +337,11 @@ module.exports = grammar({
       'Reg',
       'Wire',
       'FIFO',
+      'Vector',
       'Action',
       'ActionValue',
       'Rules',
       'Module',
-    ),
-
-    parameterized_type: $ => prec(1, seq(
-      choice($.identifier, $.primitive_type),
-      '#',
-      '(',
-      choice($.number, $.expression, $.type),
-      repeat(seq(',', choice($.number, $.expression, $.type))),
-      ')'
-    )),
-
-    vector_type: $ => seq(
-      'Vector',
-      '#',
-      '(',
-      $.expression,
-      ',',
-      $.type,
-      ')'
     ),
 
     // Parameters and arguments
