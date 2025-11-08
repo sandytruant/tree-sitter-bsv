@@ -289,8 +289,8 @@ module.exports = grammar({
 
     // Types
     type: $ => choice(
-      $.parameterized_type,
       $.vector_type,
+      $.parameterized_type,
       $.primitive_type,
       $.identifier,
     ),
@@ -312,14 +312,14 @@ module.exports = grammar({
       'Module',
     ),
 
-    parameterized_type: $ => seq(
+    parameterized_type: $ => prec(1, seq(
       choice($.identifier, $.primitive_type),
       '#',
       '(',
-      choice($.type, $.number, $.expression),
-      repeat(seq(',', choice($.type, $.number, $.expression))),
+      choice($.number, $.expression, $.type),
+      repeat(seq(',', choice($.number, $.expression, $.type))),
       ')'
-    ),
+    )),
 
     vector_type: $ => seq(
       'Vector',
