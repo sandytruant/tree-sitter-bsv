@@ -289,10 +289,10 @@ module.exports = grammar({
 
     // Types
     type: $ => choice(
-      $.primitive_type,
-      $.identifier,
       $.parameterized_type,
       $.vector_type,
+      $.primitive_type,
+      $.identifier,
     ),
 
     primitive_type: $ => choice(
