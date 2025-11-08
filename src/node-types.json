@@ -388,6 +388,16 @@
             "named": true
           }
         ]
+      },
+      "return_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -396,6 +406,10 @@
       "types": [
         {
           "type": "comment",
+          "named": true
+        },
+        {
+          "type": "expression",
           "named": true
         },
         {
@@ -408,10 +422,6 @@
         },
         {
           "type": "statement",
-          "named": true
-        },
-        {
-          "type": "type",
           "named": true
         }
       ]
@@ -570,25 +580,6 @@
       "types": [
         {
           "type": "parameter",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "parameterized_type",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "type",
           "named": true
         }
       ]
@@ -766,7 +757,7 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
@@ -774,7 +765,7 @@
           "named": true
         },
         {
-          "type": "parameterized_type",
+          "type": "number",
           "named": true
         },
         {
@@ -782,7 +773,7 @@
           "named": true
         },
         {
-          "type": "vector_type",
+          "type": "type",
           "named": true
         }
       ]
@@ -844,25 +835,6 @@
         },
         {
           "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "type",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "vector_type",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "expression",
           "named": true
         },
         {
