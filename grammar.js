@@ -316,8 +316,8 @@ module.exports = grammar({
       $.identifier,
       '#',
       '(',
-      $.type,
-      repeat(seq(',', $.type)),
+      choice($.type, $.number, $.expression),
+      repeat(seq(',', choice($.type, $.number, $.expression))),
       ')'
     ),
 
