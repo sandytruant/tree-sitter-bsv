@@ -171,6 +171,7 @@ module.exports = grammar({
       $.assignment_statement,
       $.if_statement,
       $.case_statement,
+      $.for_statement,
       $.return_statement,
       $.expression_statement,
     ),
@@ -206,6 +207,24 @@ module.exports = grammar({
       $.expression,
       ':',
       $.statement
+    ),
+
+    for_statement: $ => seq(
+      'for',
+      '(',
+      field('init', $.variable_declaration),
+      field('condition', $.expression),
+      ';',
+      field('update', seq(
+        $.identifier,
+        '=',
+        $.expression
+      )),
+      ')',
+      choice(
+        $.statement,
+        seq('begin', repeat($.statement), 'end')
+      )
     ),
 
     return_statement: $ => seq(

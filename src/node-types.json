@@ -224,6 +224,60 @@
     }
   },
   {
+    "type": "for_statement",
+    "named": true,
+    "fields": {
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "init": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "variable_declaration",
+            "named": true
+          }
+        ]
+      },
+      "update": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "=",
+            "named": false
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "function_declaration",
     "named": true,
     "fields": {
@@ -718,6 +772,10 @@
           "named": true
         },
         {
+          "type": "for_statement",
+          "named": true
+        },
+        {
           "type": "if_statement",
           "named": true
         },
@@ -1037,6 +1095,10 @@
     "named": false
   },
   {
+    "type": "begin",
+    "named": false
+  },
+  {
     "type": "case",
     "named": false
   },
@@ -1046,6 +1108,10 @@
   },
   {
     "type": "else",
+    "named": false
+  },
+  {
+    "type": "end",
     "named": false
   },
   {
@@ -1082,6 +1148,10 @@
   },
   {
     "type": "export",
+    "named": false
+  },
+  {
+    "type": "for",
     "named": false
   },
   {
