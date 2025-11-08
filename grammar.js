@@ -283,19 +283,19 @@ module.exports = grammar({
     ),
 
     // Types
-    type: $ => seq(
+    type: $ => prec.right(seq(
       choice(
         $.primitive_type,
         $.identifier,
       ),
-      optional(seq(
+      optional(prec(1, seq(
         '#',
         '(',
         choice($.number, $.type),
         repeat(seq(',', choice($.number, $.type))),
         ')'
-      ))
-    ),
+      )))
+    )),
 
     primitive_type: $ => choice(
       'Bit',
